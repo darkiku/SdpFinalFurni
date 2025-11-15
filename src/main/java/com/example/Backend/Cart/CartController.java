@@ -1,7 +1,6 @@
 package com.example.Backend.Cart;
 
 import com.example.Backend.Product.Product;
-import com.example.Backend.visitor.PriceVisitor;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

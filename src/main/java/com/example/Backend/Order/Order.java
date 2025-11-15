@@ -36,4 +36,6 @@ public class Order {
     @Column
     @NotNull
     private String status;
+    @Column
+    private String orderType;
 }
