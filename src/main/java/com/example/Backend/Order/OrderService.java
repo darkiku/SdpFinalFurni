@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
-
     @Autowired
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -25,13 +24,10 @@ public class OrderService {
         orderRepository.save(order);
         return order;
     }
-
-    // Visitor Pattern - экспорт заказа
     public String exportOrder(Long orderId, OrderVisitor visitor) {
         Order order = findById(orderId);
-        return order.accept(visitor); // Используем Visitable интерфейс
+        return order.accept(visitor);
     }
-
     public Order findById(long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

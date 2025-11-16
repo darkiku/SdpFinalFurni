@@ -27,8 +27,6 @@ public class OrderController {
         orderService.createOrder(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
-
-    // Factory Pattern - создание заказа через фабрику
     @PostMapping("/createWithFactory")
     public ResponseEntity<?> createWithFactory(@RequestBody Map<String, Object> request) {
         try {
@@ -66,8 +64,6 @@ public class OrderController {
         List<Order> orders = orderService.findAll();
         return ResponseEntity.ok(orders);
     }
-
-    // Visitor Pattern - экспорт заказа в разных форматах
     @GetMapping("/export/{id}")
     public ResponseEntity<Map<String, String>> exportOrder(
             @PathVariable Long id,
@@ -97,8 +93,6 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // Visitor Pattern - экспорт всех заказов
     @GetMapping("/exportAll")
     public ResponseEntity<Map<String, Object>> exportAllOrders(@RequestParam String format) {
         List<Order> orders = orderService.findAll();
@@ -120,7 +114,6 @@ public class OrderController {
             error.put("error", "Invalid format. Use 'json' or 'csv'");
             return ResponseEntity.badRequest().body(error);
         }
-
         Map<String, Object> response = new HashMap<>();
         response.put("format", format);
         response.put("count", orders.size());

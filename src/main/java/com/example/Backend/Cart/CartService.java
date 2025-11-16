@@ -81,8 +81,6 @@ public class CartService {
         cart.setTotalPrice(0.0);
         cartRepository.save(cart);
     }
-
-    // Strategy Pattern - применение скидки
     public Double applyDiscount(Long cartId, DiscountStrategy strategy) {
         Cart cart = getCartById(cartId);
         Double originalPrice = cart.getTotalPrice();
@@ -91,8 +89,6 @@ public class CartService {
         cartRepository.save(cart);
         return discountedPrice;
     }
-
-    // Strategy Pattern - автоматическая скидка по уровням
     public Map<String, Object> calculateWithAutoDiscount(Long cartId) {
         Cart cart = getCartById(cartId);
         Double originalPrice = cart.getTotalPrice();
@@ -108,8 +104,6 @@ public class CartService {
 
         return result;
     }
-
-    // Decorator Pattern - расчет цены с дополнительными услугами
     public Double calculateDecoratedPrice(Product product, List<String> extras) {
         ProductWrapper wrapped = new ProductWrapper(product) {
             @Override
@@ -136,10 +130,8 @@ public class CartService {
                     break;
             }
         }
-
         return wrapped.getTotalPrice();
     }
-
     private Double calculateCartTotal(List<Product> products) {
         return products.stream()
                 .mapToDouble(Product::getPrice)

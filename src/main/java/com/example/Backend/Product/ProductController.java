@@ -31,14 +31,11 @@ public class ProductController {
         }
         return ResponseEntity.notFound().build();
     }
-
     @PostMapping("/addProduct")
     public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product) {
         productService.saveProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
-
-    // Builder Pattern - создание кастомного продукта
     @PostMapping("/createCustom")
     public ResponseEntity<?> createCustomProduct(@RequestBody Map<String, Object> request) {
         try {
@@ -77,8 +74,6 @@ public class ProductController {
         productService.updateProduct(product);
         return ResponseEntity.ok(product);
     }
-
-    // Observer Pattern - обновление цены с уведомлением подписчиков
     @PutMapping("/updatePrice/{id}")
     public ResponseEntity<Map<String, String>> updatePrice(
             @PathVariable long id,
@@ -92,8 +87,6 @@ public class ProductController {
 
         return ResponseEntity.ok(response);
     }
-
-    // Observer Pattern - подписка на обновления продукта
     @PostMapping("/subscribe")
     public ResponseEntity<Map<String, String>> subscribe(@RequestParam String email) {
         try {
@@ -111,16 +104,12 @@ public class ProductController {
             return ResponseEntity.badRequest().body(error);
         }
     }
-
-    // Observer Pattern - отписка от обновлений (NEW)
     @PostMapping("/unsubscribe")
     public ResponseEntity<Map<String, String>> unsubscribe(@RequestParam String email) {
         productService.unsubscribeFromProduct(email);
-
         Map<String, String> response = new HashMap<>();
         response.put("message", "Unsubscribed from product updates");
         response.put("email", email);
-
         return ResponseEntity.ok(response);
     }
 }

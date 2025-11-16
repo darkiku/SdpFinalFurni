@@ -65,16 +65,12 @@ public class ProductService {
             productRepository.save(updateProduct);
         }
     }
-
-    // Observer Pattern - обновление цены с уведомлением
     public void updateProductPrice(long id, Double newPrice) {
         Product product = productRepository.findById(id);
         if (product != null) {
             Double oldPrice = product.getPrice();
             product.setPrice(newPrice);
             productRepository.save(product);
-
-            // Уведомляем всех подписчиков
             productSubject.notifyObservers(
                     String.format("Product '%s' price changed from $%.2f to $%.2f",
                             product.getName(), oldPrice, newPrice)
@@ -82,17 +78,14 @@ public class ProductService {
         }
     }
 
-    // Observer Pattern - подписка на обновления
     public void subscribeToProduct(String email) {
+
         productSubject.attach(new EmailObserver(email));
     }
 
-    // Observer Pattern - отписка от обновлений (NEW)
     public void unsubscribeFromProduct(String email) {
         productSubject.detachByEmail(email);
     }
-
-    // Получить количество подписчиков (для тестирования)
     public int getSubscriberCount() {
         return productSubject.getObserverCount();
     }
