@@ -57,7 +57,8 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:8080",
                 "http://localhost:5500",
-                "https://front-furni-kncwwo1mw-seriks-projects-6f009baf.vercel.app"
+                "https://front-furni-kncwwo1mw-seriks-projects-6f009baf.vercel.app",
+                "https://sdpfinalfurni-production.up.railway.app"
 
         ));
         configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
