@@ -27,7 +27,7 @@ public class ProductService {
     public void saveProduct(Product product){
         productRepository.save(product);
     }
-    public Product createCustomProduct(String name,String category,Double price,String color,String size,String material){
+    public Product createCustomProduct(String name,String category,Double price,String color,String size,String material,String imageUrl){
         Product product=new ProductBuilder()
                 .setName(name)
                 .setCategory(category)
@@ -35,8 +35,8 @@ public class ProductService {
                 .setColor(color)
                 .setSize(size)
                 .setMaterial(material)
-                .setImageUrl("default.jpg")
-                .setDescription("Custom product")
+                .setImageUrl(imageUrl)
+                .setDescription("Custom "+size+" "+color+" "+material+" "+category)
                 .build();
         productRepository.save(product);
         return product;
@@ -52,6 +52,9 @@ public class ProductService {
             updateProduct.setDescription(product.getDescription());
             updateProduct.setImageUrl(product.getImageUrl());
             updateProduct.setCategory(product.getCategory());
+            updateProduct.setColor(product.getColor());
+            updateProduct.setSize(product.getSize());
+            updateProduct.setMaterial(product.getMaterial());
             productRepository.save(updateProduct);
         }
     }

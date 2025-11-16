@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,21 +20,16 @@ import java.util.List;
 @Table(name = "product")
 public class Product {
     @Column
-    @NotNull
     private String name;
     @Column
-    @NotNull
     private String category;
     @Column
-    @NotNull
     private String imageUrl;
     @Column
-    @NotNull
     private String description;
     @Column
     private Double price;
     @Id
-    @NotNull
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -48,5 +44,5 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "cart_id"))
     @JsonIgnore
-    private List<Cart> carts;
+    private List<Cart> carts=new ArrayList<>();
 }

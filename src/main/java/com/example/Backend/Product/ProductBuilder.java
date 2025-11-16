@@ -46,8 +46,8 @@ public class ProductBuilder {
         Product product=new Product();
         product.setName(this.name);
         product.setCategory(this.category);
-        product.setImageUrl(this.imageUrl);
-        product.setDescription(this.description);
+        product.setImageUrl(this.imageUrl!=null?this.imageUrl:"https://placehold.co/400x300/f59e0b/fff?text="+name);
+        product.setDescription(this.description!=null?this.description:"Custom "+category);
         product.setPrice(this.price);
         product.setColor(this.color);
         product.setSize(this.size);
