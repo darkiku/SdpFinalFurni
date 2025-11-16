@@ -20,53 +20,55 @@ import java.util.List;
 @Configuration
 @AllArgsConstructor
 public class SecurityConfig {
+
     private final AuthenticationProvider authProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors->cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf->csrf.disable())
-                .authorizeHttpRequests(authorize->authorize
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/product/allProducts").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/product/product/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/product/createCustom").authenticated()
-                        .requestMatchers(HttpMethod.POST,"/api/product/addProduct").authenticated()
-                        .requestMatchers(HttpMethod.PUT,"/api/product/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/product/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/product/allProducts").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/product/product/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/product/createCustom").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/product/addProduct").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/product/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/product/**").authenticated()
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/cart/**").authenticated()
                         .requestMatchers("/api/order/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session->session
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authProvider)
-                .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration configuration=new CorsConfiguration();
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "http://localhost:8080",
-                "http://localhost:5500",
-                "https://front-furni-kncwwo1mw-seriks-projects-6f009baf.vercel.app",
+                "https://front-furni.vercel.app",
                 "https://sdpfinalfurni-production.up.railway.app"
-
         ));
-        configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
