@@ -6,17 +6,23 @@ public abstract class ProductWrapper {
     protected Product product;
     protected double extraCost;
     protected String extraDescription;
-
-    public ProductWrapper(Product product){
-        this.product=product;
+    public ProductWrapper(Product product) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+        this.product = product;
     }
-    public double getTotalPrice(){
-        return product.getPrice()+extraCost;
+    public double getTotalPrice() {
+        return product.getPrice() + extraCost;
     }
-    public String getFullDescription(){
-        return product.getDescription()+" + "+extraDescription;
+    public String getFullDescription() {
+        return product.getDescription() + " + " + extraDescription;
     }
-    public Product getProduct(){
+    public Product getProduct() {
         return product;
     }
+    public double getExtraCost() {
+        return extraCost;
+    }
+    public String getExtraDescription() {return extraDescription;}
 }
